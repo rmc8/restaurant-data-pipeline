@@ -208,7 +208,6 @@ class Tabelog:
         params = self.base_url.split("?")[-1]
         while True:
             self.logger.info(f"Scraping page {page_num}...")
-            page_num += 1
             url = urljoin(base_url, str(page_num) + "/")
             url_with_params = f"{url}?{params}"
             restaurant_url_list = self._scrape_urls(url_with_params)
