@@ -8,8 +8,8 @@ from restaurant_data_pipeline.tabelog import Tabelog
 
 
 def proc(
-    url: str = "https://tabelog.com/tokyo/A1304/A130401/R5172/rstLst/?Srt=D&SrtT=rt&sort_mode=1&svd=20250217&svt=2000&svps=2",
-    ua: str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+    url: str,
+    ua: str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
     skip: Optional[int] = None,
     limit: Optional[int] = None,
     test_mode: bool = False,
