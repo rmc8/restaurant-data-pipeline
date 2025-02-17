@@ -70,6 +70,20 @@ class Tabelog:
         self.headers = {"User-Agent": ua}
         self.logger = logger
         self.restaurant_id = 0
+        self.client = httpx.Client(
+            headers=self.headers,
+            timeout=httpx.Timeout(
+                connect=30.0,
+                read=30.0,
+                write=30.0,
+                pool=30.0,
+            ),
+            follow_redirects=True,
+        )
+
+    def __del__(self):
+        if hasattr(self, "client"):
+            self.client.close()
 
     @staticmethod
     def sleep():
@@ -77,7 +91,7 @@ class Tabelog:
 
     def _scrape_urls(self, url: str) -> list:
         try:
-            res = httpx.get(url, headers=self.headers)
+            res = self.client.get(url, headers=self.headers)
             res.raise_for_status()
         except httpx.HTTPStatusError as e:
             self.logger.error(f"Error fetching {url}: {e}")
@@ -172,7 +186,7 @@ class Tabelog:
         for url_dict in tqdm(url_list):
             item_url = url_dict["url"]
             try:
-                res = httpx.get(item_url, headers=self.headers)
+                res = self.client.get(item_url, headers=self.headers)
                 self.sleep()
                 res.raise_for_status()
             except httpx.HTTPStatusError as e:
