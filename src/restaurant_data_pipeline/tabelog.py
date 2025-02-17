@@ -12,6 +12,39 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup
 
 
+def setup_logger() -> logging.Logger:
+    # ロガーの作成
+    logger = logging.getLogger("tabelog_scraper")
+    logger.setLevel(logging.INFO)
+
+    # ファイルハンドラーの設定
+    file_handler = logging.FileHandler("tabelog_scraper.log", encoding="utf-8")
+    file_handler.setLevel(logging.INFO)
+
+    # コンソールハンドラーの設定
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+
+    # フォーマッターの作成
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+    # ハンドラーにフォーマッターを設定
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+
+    # ロガーにハンドラーを追加
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+
+    return logger
+
+
+logger = setup_logger()
+
+
 class RestaurantItem(TypedDict):
     restaurant_id: int
     url: str
@@ -28,7 +61,7 @@ class Tabelog:
         test_mode: bool = False,
         skip: Optional[int] = None,
         limit: Optional[int] = None,
-        logger: logging.Logger = logging.getLogger(__name__),
+        logger: logging.Logger = logger,
     ):
         self.base_url = base_url
         self.test_mode = test_mode
