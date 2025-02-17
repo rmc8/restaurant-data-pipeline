@@ -240,7 +240,7 @@ class Tabelog:
             page_num += 1
             # ページ数の上限が来たらクローリングを終了する
             if page_num > self.limit:
-                self.logger.log("Reached the limit of pages to scrape. Exiting...")
+                self.logger.info("Reached the limit of pages to scrape. Exiting...")
                 break
             time.sleep(1)
         self.logger.info(f"Scraping {len(url_list)} restaurants in total.")
