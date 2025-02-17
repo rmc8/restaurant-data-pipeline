@@ -165,7 +165,7 @@ class Tabelog:
         if elm is None:
             return
         count_elm = elm.select_one("em.num")
-        if count_elm is None:
+        if count_elm is None or count_elm.get_text(strip=True) == "-":
             return
         return int(count_elm.get_text(strip=True))
 
@@ -175,7 +175,7 @@ class Tabelog:
         if elm is None:
             return
         count_elm = elm.select_one("em.num")
-        if count_elm is None:
+        if count_elm is None or count_elm.get_text(strip=True) == "-":
             return
         return int(count_elm.get_text(strip=True))
 
